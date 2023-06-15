@@ -1,10 +1,5 @@
 # frozen_string_literal: true
 
-class CategoriesController < ApplicationController
-  # GET /categories
-  def index
-    @categories = Category.all
-
-    render json: @categories
-  end
+class CategoriesController < BaseController
+  actions :index
 end

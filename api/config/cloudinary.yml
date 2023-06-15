@@ -1,0 +1,7 @@
+development:
+  cloud_name: "dmvnklw7t"
+  api_key: "191485485811196"
+  api_secret: "FQj7RCVV6NQ7GsVpOQE9zDDSt24"
+  async: true
+  secure: true
+  cdn_subdomain: true

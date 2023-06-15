@@ -1,54 +1,19 @@
-class VideosController < ApplicationController
-  before_action :set_video, only: %i[show update destroy]
+class VideosController < BaseController
+  actions :index
 
-  # GET /videos
-  def index
-    @videos = Video.all
-    @categories = Category.all
-
-    render json: { videos: @videos, :categories => @categories }
-  end
-
-  # GET /videos/1
-  def show
-    render json: @video
-  end
-
-  # POST /videos
   def create
-    @video = Video.new(video_params)
+    if new_resource.save
+      ThumbnailGeneratorJob.perform_now(new_resource.id, params[:file])
 
-    binding.pry
-    if @video.save
-      render json: @video, status: :created, location: @video
+      render json: new_resource, status: :created
     else
-      render json: @video.errors, status: :unprocessable_entity
+      render json: new_resource.errors, status: :unprocessable_entity
     end
-  end
-
-  # PATCH/PUT /videos/1
-  def update
-    if @video.update(video_params)
-      render json: @video
-    else
-      render json: @video.errors, status: :unprocessable_entity
-    end
-  end
-
-  # DELETE /videos/1
-  def destroy
-    @video.destroy
   end
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
-  def set_video
-    @video = Video.find(params[:id])
-  end
-
-  # Only allow a list of trusted parameters through.
-  def video_params
-    params.fetch(:video, {} )
+  def permitted_params
+    params.permit(:title, :category_id, :file)
   end
 end

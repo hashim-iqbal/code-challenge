@@ -3,7 +3,7 @@ export const listCategories = () => {
     {
       method: "GET",
       headers: {
-        "Accept": "application/json"
+        "Content-Type": "application/json"
       },
     })
   .then(response => response.json());
@@ -14,7 +14,7 @@ export const listVideos = () => {
     {
       method: "GET",
       headers: {
-        "Accept": "application/json"
+        "Content-Type": "application/json"
       },
     })
   .then(response => response.json());
@@ -24,9 +24,6 @@ export const createVideo = formData => {
   return fetch('/api/videos',
     {
       method: "POST",
-      headers: {
-        "Accept": "application/json"
-      },
       body: formData
     })
     .then(response => {

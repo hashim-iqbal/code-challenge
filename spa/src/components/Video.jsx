@@ -8,9 +8,10 @@ const Video = (props) => {
   return (
     <div className="card video">
       <video
+        width="300"
+        height="200"
         controls
         src={url}
-        preload="none"
         poster={thumbnail}
         title={title}
         className="video-player"

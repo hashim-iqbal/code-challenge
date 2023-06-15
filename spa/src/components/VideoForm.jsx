@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {listCategories, createVideo} from "../services/API";
+import Video from "../components/Video";
+import FilesDragAndDrop from "./FilesDragAndDrop"
 
 import "./VideoForm.css";
 
@@ -9,6 +11,8 @@ const VideoForm = props => {
 
   const [title, setTitle] = useState("");
   const [categoryId, setCategoryId] = useState("");
+  const[uploadedFile, setUploadedFile] = useState("");
+  const [isUploading, setIsUploading] = useState(false);
 
   useEffect(() => {
     listCategories()
@@ -17,17 +21,25 @@ const VideoForm = props => {
 
   const submitForm = (event) => {
     event.preventDefault();
+    setIsUploading(true);
 
     const formData = new FormData(event.target);
 
+    formData.append('file', uploadedFile);
+    formData.append('category_id', categoryId);
+    formData.append('title', title);
+
     createVideo(formData)
       .then(data => {
+        setIsUploading(false);
         setMessage("Video successfully uploaded");
         setTitle("");
         event.target.file.value = null;
         setCategoryId("");
+        setUploadedFile("");
       })
       .catch(errorMessage => {
+        setIsUploading(false);
         setMessage(`Failed to upload video: ${errorMessage}`);
       });
   }
@@ -61,16 +73,21 @@ const VideoForm = props => {
         <label htmlFor="file" className="form-label">
           File
         </label>
-        <input
-          id="file"
-          type="file"
-          name="file"
-          accept="video/mp4, video/mov"
-          required
-          className="form-control"
-        />
-      </div>
+        <div className="max-w-sm mx-auto">
+          <FilesDragAndDrop
+            onFileUpload={(file) => setUploadedFile(file)}
+          />
+        </div>
 
+        {
+          uploadedFile && (
+            <Video
+              title={title}
+              url={URL.createObjectURL(uploadedFile)}
+            />
+          )
+        }
+      </div>
 
       <div className="mb-3">
         <label htmlFor="category" className="form-label">
@@ -94,7 +111,7 @@ const VideoForm = props => {
         </select>
       </div>
 
-      <input type="submit" value="Submit" className="btn btn-primary"/>
+      <input type="submit" disabled={isUploading} value={isUploading ? 'Submitting...' : 'Submit' } className="btn btn-primary"/>
     </form>
   );
   

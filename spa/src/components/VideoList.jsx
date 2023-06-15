@@ -19,10 +19,9 @@ const VideoList = () => {
       ) : (
         videos.map((video) => (
           <Video
-            key={video.id}
             title={video.title}
-            url={video.file.url}
-            thumbnail={video.file.thumbnails.large}
+            url={video.file}
+            thumbnail={video.thumbnails}
           />
         ))
       )}

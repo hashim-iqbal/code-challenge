@@ -5,11 +5,11 @@ You have already received the requirement for this little project.
 Please consider this repository as a boilerplate for the future enhancements.
 
 ## TODO
-- [ ] Make sure the application works as expected.
-- [ ] Consider the performance.
-- [ ] If you're not familiar with React, feel free to replace it with your
+- [x] Make sure the application works as expected.
+- [x] Consider the performance.
+- [x] If you're not familiar with React, feel free to replace it with your
   own favorite js framework.
-- [ ] Follow best practices for code maintainability.
+- [x] Follow best practices for code maintainability.
 
 ---
 

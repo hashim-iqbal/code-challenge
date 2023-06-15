@@ -2,6 +2,6 @@
 
 FactoryBot.define do
   factory :category do
-    name { 'Name of category' }
+    name { Category::NAMES.sample }
   end
 end

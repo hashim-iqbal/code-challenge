@@ -21,7 +21,7 @@ RSpec.describe "Videos", type: :request do
 
   describe "GET /videos" do
     it "renders a list of videos" do
-      videos = create_list(:video, 2)
+      videos = create_list(:video, 2, :with_video)
 
       get videos_url
 
